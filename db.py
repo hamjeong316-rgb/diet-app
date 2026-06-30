@@ -1,14 +1,19 @@
+import os
 import streamlit as st
+from supabase import create_client, Client
 import json
 from datetime import date
+from dotenv import load_dotenv
 
+load_dotenv()
 
 @st.cache_resource
 def get_db():
-    from supabase import create_client
-    import os
-    url = os.getenv("SUPABASE_URL")
-    key = os.getenv("SUPABASE_KEY")
+    url = st.secrets.get("SUPABASE_URL") or os.getenv("SUPABASE_URL")
+    key = st.secrets.get("SUPABASE_KEY") or os.getenv("SUPABASE_KEY")
+    if not url or not key:
+        raise ValueError("Supabase URL 또는 Key를 찾을 수 없습니다. 설정을 확인해주세요.")
+        
     return create_client(url, key)
 
 
