@@ -8,7 +8,7 @@ from db import get_meals_by_date
 def page_stats(conn):
     st.markdown("""
         <div class="appbar">
-          <div class="appbar-title">📅 날짜별 상세 기록</div>
+          <div class="appbar-title"><span style="font-family:'Material Symbols Rounded';vertical-align:middle;margin-right:4px;">calendar_month</span> 날짜별 상세 기록</div>
         </div>""", unsafe_allow_html=True)
 
     if not st.session_state.uid:

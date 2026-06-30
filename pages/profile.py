@@ -7,7 +7,7 @@ from utils import calc_bmr, calc_tdee, hash_password
 def page_profile(conn, model):
     st.markdown("""
         <div class="appbar">
-          <div class="appbar-title">👤 내 정보</div>
+          <div class="appbar-title"><span style="font-family:'Material Symbols Rounded';vertical-align:middle;margin-right:4px;">face</span> 내 정보</div>
           <div class="appbar-sub">인바디 &amp; 다이어트 목표</div>
         </div>""", unsafe_allow_html=True)
 
@@ -52,7 +52,7 @@ def page_profile(conn, model):
         g_day  = c2.number_input("기간(일)",       7, 365,      int(user.get("goal_days",90))     if user else 90)
         g_start = st.date_input("시작일", date.today())
 
-        submitted = st.form_submit_button("💾 저장하기")
+        submitted = st.form_submit_button(":material/save: 저장하기")
 
     if submitted:
         if not name:
@@ -79,7 +79,7 @@ def page_profile(conn, model):
         deficit = min((diff / days) * 7, 0.5) * 7700 / 7 if diff > 0 else 0
         tgt_cal = max(tdee - deficit, bmr * 1.1)
 
-        st.success("✅ 저장 완료!")
+        st.success(":material/check_circle: 저장 완료!")
         st.markdown(f"""
             <div class="card" style="margin-top:12px">
               <div class="card-title">계산 결과</div>

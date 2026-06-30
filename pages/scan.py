@@ -9,12 +9,12 @@ from ai import analyze_image, analyze_text
 def page_scan(conn, model):
     st.markdown("""
         <div class="appbar">
-          <div class="appbar-title">📸 식사 기록</div>
+          <span style="font-family:'Material Symbols Rounded';vertical-align:middle;margin-right:4px;">photo_camera</span> 식사 기록
           <div class="appbar-sub">사진 스캔 또는 직접 입력</div>
         </div>""", unsafe_allow_html=True)
  
     if not st.session_state.uid:
-        st.warning("👤 탭에서 내 정보를 먼저 입력해주세요.")
+        st.warning("내 정보를 먼저 입력해주세요.")
         return
     if not model:
         st.error("Gemini API 키를 설정해주세요.")
@@ -23,7 +23,7 @@ def page_scan(conn, model):
     user = get_user(conn, st.session_state.uid)
  
     # ── 1. 사진 업로드 ──
-    st.markdown("<div class='card-title'>📸 사진으로 스캔하기</div>", unsafe_allow_html=True)
+    st.markdown("<div class='card-title'><span style='font-family:\"Material Symbols Rounded\";vertical-align:middle;margin-right:6px;'>photo_camera</span> 사진으로 스캔하기</div>", unsafe_allow_html=True)
     uploaded = st.file_uploader(
         "음식 사진 (갤러리에서 선택)",
         type=["jpg", "jpeg", "png", "webp"],
@@ -51,7 +51,7 @@ def page_scan(conn, model):
     # ── 2. 직접 입력 ──
     if not uploaded:
         st.markdown("<hr style='border-color:#ffe5d0;margin:24px 0'>", unsafe_allow_html=True)
-        st.markdown("<div class='card-title'>✍️ 직접 입력 (AI 계산)</div>", unsafe_allow_html=True)
+        st.markdown("<div class='card-title'><span style='font-family:\"Material Symbols Rounded\";vertical-align:middle;margin-right:6px;'>edit_note</span> 직접 입력 (AI 계산)</div>", unsafe_allow_html=True)
 
         # 1. 15분 단위 시각 리스트 생성 (00:00 ~ 23:45)
         time_options = []
@@ -71,7 +71,7 @@ def page_scan(conn, model):
         m_name    = c3.text_input("음식 종류 (예: 햇반, 구운계란)")
         m_amount  = c4.text_input("섭취량 (예: 150g, 두개)")
 
-        if st.button("🤖 AI 영양소 계산하기"):
+        if st.button(":material/smart_toy: AI 영양소 계산하기"):
             if not m_name or not m_amount:
                 st.warning("음식 종류와 섭취량을 입력해주세요.")
             else:
@@ -106,7 +106,7 @@ def page_scan(conn, model):
     if ts:
         try:
             meal_time = datetime.strptime(ts, "%Y-%m-%d %H:%M")
-            ts_badge  = f'<span class="badge badge-green">📅 {ts} 기록됨</span>'
+            ts_badge  = f'<span class="badge badge-green"><span style="font-family:\'Material Symbols Rounded\';font-size:0.85rem;vertical-align:middle;margin-right:2px;">calendar_month</span> {ts} 기록됨</span>'
         except:
             ts_badge  = '<span class="badge badge-warn">시간 오류</span>'
  
@@ -166,11 +166,11 @@ def page_scan(conn, model):
         </div>""", unsafe_allow_html=True)
  
     if res.get("notes"):
-        st.markdown(f'<div class="card" style="font-size:0.82rem;color:#7a5c47">💬 {res["notes"]}</div>',
+        st.markdown(f'<div class="card" style="font-size:0.82rem;color:#7a5c47;display:flex;align-items:center;"><span style="font-family:\'Material Symbols Rounded\';margin-right:6px;font-size:1.1rem;vertical-align:middle;">chat_bubble</span> {res["notes"]}</div>',
                     unsafe_allow_html=True)
  
     # 저장 버튼
-    if st.button("✅ 식사 기록 저장", type="primary"):
+    if st.button(":material/assignment_turned_in: 식사 기록 저장", type="primary"):
         meal = {
             "user_id":        user["id"],
             "meal_time":      meal_time.isoformat(),
@@ -182,11 +182,11 @@ def page_scan(conn, model):
             "raw_analysis":   json.dumps(res, ensure_ascii=False),
         }
         if save_meal(conn, meal):
-            st.success("🎉 저장 완료!")
+            st.success(":material/celebration: 저장 완료!")
             st.session_state.scan_result = None
             st.rerun()
  
-    if st.button("🔄 다시 입력하기"):
+    if st.button(":material/refresh: 다시 입력하기"):
         st.session_state.scan_result = None
         st.rerun()
  

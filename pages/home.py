@@ -24,7 +24,7 @@ def page_home(conn, logout_fn):
     if not user:
         st.markdown("""
             <div class="card" style="text-align:center;padding:32px 18px">
-              <div style="font-size:2.5rem;margin-bottom:12px">👤</div>
+              <div style="font-size:3.5rem; margin-bottom:12px; font-family:'Material Symbols Rounded';">face</div>
               <div style="color:#3d2c1e;font-weight:700;margin-bottom:6px">내 정보를 먼저 입력해주세요</div>
               <div style="color:#b08060;font-size:0.82rem">하단 탭에서 인바디 &amp; 목표를 설정하면<br>맞춤 식단 관리가 시작됩니다</div>
             </div>""", unsafe_allow_html=True)

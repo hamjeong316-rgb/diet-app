@@ -7,12 +7,12 @@ from utils import target_calories, sum_nutrients
 def page_nutrients(conn):
     st.markdown("""
         <div class="appbar">
-          <div class="appbar-title">📊 오늘 영양소 현황</div>
+          <div class="appbar-title"><span style="font-family:'Material Symbols Rounded';vertical-align:middle;margin-right:4px;">leaderboard</span> 오늘 영양소 현황</div>
           <div class="appbar-sub">목표 대비 달성률을 확인해요</div>
         </div>""", unsafe_allow_html=True)
 
     if not st.session_state.uid:
-        st.warning("👤 탭에서 내 정보를 먼저 입력해주세요.")
+        st.warning("내 정보를 먼저 입력해주세요.")
         return
 
     user    = get_user(conn, st.session_state.uid)
@@ -26,7 +26,10 @@ def page_nutrients(conn):
     if not meals:
         st.markdown(
             '<div class="card" style="text-align:center;padding:32px">'
-            '<p style="color:#b08060">오늘 식사 기록이 없어요 🍽️<br>📸 스캔 탭에서 업로드해보세요</p></div>',
+            '<p style="color:#b08060; display:flex; flex-direction:column; align-items:center; gap:4px;">'
+            '  <span><span style="font-family:\'Material Symbols Rounded\'; vertical-align:middle; margin-right:4px;">restaurant</span>오늘 식사 기록이 없어요</span>'
+            '  <span style="font-size:0.85rem; color:#b08060; opacity:0.8;"><span style="font-family:\'Material Symbols Rounded\'; vertical-align:middle; margin-right:4px; font-size:1.1rem;">photo_camera</span>스캔 탭에서 업로드해보세요</span>'
+            '</p></div>',
             unsafe_allow_html=True,
         )
 
