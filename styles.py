@@ -177,6 +177,10 @@ label, .stMarkdown p { color: #7a5c47 !important; font-size: 0.85rem !important;
     transition: transform 0.1s !important;
 }
 .stButton > button:active { transform: scale(0.97) !important; }
+div[data-testid="stButton"] > button[key*="card_select"] {
+    background-color: transparent !important;
+    border: none !important;
+}
 
 /* ── 파일 업로더 ── */
 [data-testid="stFileUploader"] {
@@ -233,34 +237,7 @@ h1, h2, h3 { color: #3d2c1e !important; }
 </style>
 """
 
-LOGIN_TAB_CSS = """
-<style>
-.block-container { padding-bottom: 40px !important; }
 
-.stTabs { display: block !important; }
-div[data-baseweb="tab-list"] {
-    background: #fff3ee !important;
-    border-radius: 14px !important;
-    padding: 4px !important;
-    gap: 4px !important;
-    border: 1.5px solid #ffe5d0 !important;
-}
-div[data-baseweb="tab"] {
-    border-radius: 10px !important;
-    color: #c4a98a !important;
-    font-weight: 800 !important;
-    font-size: 0.85rem !important;
-    padding: 8px 0 !important;
-}
-div[aria-selected="true"][data-baseweb="tab"] {
-    background: #ffffff !important;
-    color: #ff7043 !important;
-    box-shadow: 0 2px 8px rgba(255,112,67,0.12) !important;
-}
-div[data-baseweb="tab-highlight"] { display: none !important; }
-div[data-baseweb="tab-border"]    { display: none !important; }
-</style>
-"""
 
 LOGIN_HERO_HTML = """
 <div style="text-align:center; padding: 48px 0 28px;">
