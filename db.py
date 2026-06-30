@@ -1,23 +1,21 @@
-import os
 import streamlit as st
-from supabase import create_client, Client
 import json
 from datetime import date
-from dotenv import load_dotenv
-
-load_dotenv()
 
 @st.cache_resource
 def get_db():
-    url = st.secrets.get("SUPABASE_URL") or os.getenv("SUPABASE_URL")
-    key = st.secrets.get("SUPABASE_KEY") or os.getenv("SUPABASE_KEY")
+    from supabase import create_client
+    import os
+    try:
+        url = st.secrets["SUPABASE_URL"]
+        key = st.secrets["SUPABASE_KEY"]
+    except (FileNotFoundError, KeyError):
+        url = os.getenv("SUPABASE_URL")
+        key = os.getenv("SUPABASE_KEY")
     if not url or not key:
-        raise ValueError("Supabase URL 또는 Key를 찾을 수 없습니다.")
-        
-    # 양끝 공백(\n, 스페이스) 및 따옴표 제거 (클라우드 파싱 에러 방지)
-    url = url.strip().strip('"').strip("'")
-    key = key.strip().strip('"').strip("'")
-    
+        st.error("SUPABASE_URL / SUPABASE_KEY가 설정되지 않았습니다. "
+                  "로컬은 .env, 배포 환경은 Streamlit Secrets를 확인해주세요.")
+        st.stop()
     return create_client(url, key)
 
 

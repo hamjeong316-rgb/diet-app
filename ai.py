@@ -7,13 +7,16 @@ from datetime import datetime
 @st.cache_resource
 def get_model():
     import google.generativeai as genai
-    key = os.getenv("GEMINI_API_KEY", "")
+    try:
+        key = st.secrets["GEMINI_API_KEY"]
+    except (FileNotFoundError, KeyError):
+        key = os.getenv("GEMINI_API_KEY", "")
     if not key:
         return None
     genai.configure(api_key=key)
     return genai.GenerativeModel("gemini-3.1-flash-lite")
-
-
+ 
+ 
 def _strip_json(text: str) -> str:
     text = text.strip()
     if "```" in text:
@@ -21,7 +24,7 @@ def _strip_json(text: str) -> str:
         if text.startswith("json"):
             text = text[4:]
     return text.strip()
-
+ 
 
 def analyze_image(model, img, user: dict) -> dict:
     prompt = f"""당신은 전문 영양사 AI입니다.
