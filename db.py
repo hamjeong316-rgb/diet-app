@@ -12,8 +12,12 @@ def get_db():
     url = st.secrets.get("SUPABASE_URL") or os.getenv("SUPABASE_URL")
     key = st.secrets.get("SUPABASE_KEY") or os.getenv("SUPABASE_KEY")
     if not url or not key:
-        raise ValueError("Supabase URL 또는 Key를 찾을 수 없습니다. 설정을 확인해주세요.")
+        raise ValueError("Supabase URL 또는 Key를 찾을 수 없습니다.")
         
+    # 양끝 공백(\n, 스페이스) 및 따옴표 제거 (클라우드 파싱 에러 방지)
+    url = url.strip().strip('"').strip("'")
+    key = key.strip().strip('"').strip("'")
+    
     return create_client(url, key)
 
 
